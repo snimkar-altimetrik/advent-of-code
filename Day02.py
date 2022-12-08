@@ -15,13 +15,14 @@ def get_inputs_from_strategy_guide(new_strategy):
             total_score += score
     return total_score
 
+
 def decoder_2(my_chance):
     chances = {
         'X': 'A',
         'Y': 'B',
         'Z': 'C'
     }
-    #chances.get(my_chance, 'default')
+    # chances.get(my_chance, 'default')
     try:
         return chances[my_chance]
     except KeyError:
