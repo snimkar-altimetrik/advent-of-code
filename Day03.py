@@ -1,4 +1,5 @@
 """
+Day 03 of Advent of Code
 Rucksack Reorganization
 """
 
@@ -14,6 +15,31 @@ def split_input_string_half():
             letters = compare_compartments_3(compartment_one, compartment_two)
             rucksack_priorities = [calculate_priority_2(common_letter) for common_letter in letters]
             priorities.append(sum(rucksack_priorities))
+    return sum(priorities)
+
+
+def input_part_two():
+    priorities = []
+    with open('input_3.txt', 'r') as input_file:
+        count = 0
+        group = []
+        for line in input_file.readlines():
+            if count < 3:
+                line = line.strip()
+                count += 1
+                group.append(line)
+            else:
+                print(group)
+                letters = compare_compartments_3(group[0], group[1], group[2])
+                rucksack_priorities = [calculate_priority_2(common_letter) for common_letter in letters]
+                priorities.append(sum(rucksack_priorities))
+                count = 1
+                line = line.strip()
+                group = [line]
+        print(group)
+        letters = compare_compartments_3(group[0], group[1], group[2])
+        rucksack_priorities = [calculate_priority_2(common_letter) for common_letter in letters]
+        priorities.append(sum(rucksack_priorities))
     return sum(priorities)
 
 
@@ -37,15 +63,20 @@ def compare_compartments_2(compartment_one, compartment_two):
     return list(matches)
 
 
-def compare_compartments_3(compartment_one, compartment_two):
+def compare_compartments_3(compartment_one, compartment_two, compartment_three=None):
     comp_one = set(compartment_one)
     comp_two = set(compartment_two)
-    matches = comp_one.intersection(comp_two)
-    return list(matches)
+    if compartment_three is None:
+        matches = comp_one.intersection(comp_two)
+        return list(matches)
+    elif compartment_three is not None:
+        comp_three = set(compartment_three)
+        matches = (comp_one.intersection(comp_two)).intersection(comp_three)
+        return list(matches)
 
 
 def calculate_priority(letter):
-    alphabets = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n',
+    alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n',
                  'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
     alphabets_weight = {val: idx+1 for idx, val in enumerate(alphabets)}
     if letter.isupper():
@@ -66,10 +97,5 @@ def calculate_priority_2(letter):
 if __name__ == '__main__':
     result = split_input_string_half()
     print(result)
-
-
-
-
-
-
-
+    result_two = input_part_two()
+    print(result_two)

@@ -1,5 +1,6 @@
 """
-Day 01: Elven Calories
+Day 01 of Advent of Code
+Elven Calories
 """
 
 def get_sum_of_calories():
